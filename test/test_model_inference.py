@@ -33,13 +33,16 @@ def test_preprocess_data(sample_data):
     assert 'Adopted' not in features.columns
     assert 'Adopted' in target.name
 
+
 # Test predict function
 def test_predict(sample_data):
     # Load the XGBoost model in the script
     model_path = r'''artifacts/model/xgboost_model.pkl'''  # Path to the saved model
-    xgb_model = pickle.load(model_path)
+    with open(model_path, 'rb') as f:
+        xgb_model = pickle.load(f)
+    
 
-    # Assuming you have a DataFrame named 'new_data' for testing predictions
+    # Assuming we have a DataFrame named 'new_data' for testing predictions
     new_data = sample_data.copy()  # Use the same sample data for testing
 
     result_df = predict(xgb_model, new_data)
